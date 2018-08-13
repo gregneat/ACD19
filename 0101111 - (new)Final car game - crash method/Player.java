@@ -37,11 +37,16 @@ public class Player{
 	
 	public boolean crash(Car c)
 	{
-		if(face.intersects(c.getBounds()))
+		if(getBounds().intersects(c.getBounds()))
 		{
 			return true;
 		}
 		return false;
+	}
+	
+	public Rectangle2D getBounds()
+	{
+		return face.getBounds();
 	}
 	
 	public double getX()

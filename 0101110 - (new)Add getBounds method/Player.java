@@ -35,6 +35,11 @@ public class Player{
 		mouth.setLine(x+10,y+30,x+30,y+30);
 	}
 	
+	public Rectangle2D getBounds()
+	{
+		return face.getBounds();
+	}
+	
 	public double getX()
 	{
 		return face.getX();
