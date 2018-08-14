@@ -62,12 +62,11 @@ public class GameShow extends JPanel implements Runnable,KeyListener{
 			g.drawString("Use up and down arrow keys to move",500,120);
 		}
 	
-		Graphics2D g2 = (Graphics2D)g;
-		p.paint(g2);
+		p.paint(g);
 		
 		for(int i=0;i<arr.length;i++)
 		{
-			arr[i].paint(g2);
+			arr[i].paint(g);
 		}
 	}
 	

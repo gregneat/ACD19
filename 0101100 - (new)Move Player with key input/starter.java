@@ -31,8 +31,7 @@ public class starter extends JPanel implements KeyListener
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D)g;
-		p.paint(g2);
+		p.paint(g);
 		
 		g.setColor(Color.BLACK);
 		g.drawString("Use WASD to move player",200,300);

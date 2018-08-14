@@ -17,8 +17,9 @@ public class Player{
 	}
 	
 	
-	public void paint(Graphics2D g2)
+	public void paint(Graphics g)
 	{
+		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(Color.BLUE);
 		g2.fill(face);
 		g2.setColor(Color.YELLOW);

@@ -15,8 +15,9 @@ public class Car{
 	}
 	
 	
-	public void paint(Graphics2D g2)
+	public void paint(Graphics g)
 	{
+		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(Color.BLUE);
 		g2.fill(body1);
 		g2.fill(body2);
