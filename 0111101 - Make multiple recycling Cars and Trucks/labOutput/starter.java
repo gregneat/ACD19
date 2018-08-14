@@ -15,7 +15,7 @@ public class starter extends JPanel implements Runnable, MouseListener {
 		frame = new JFrame("App");
 		frame.add(new starter());
 		frame.setUndecorated(true);
-		frame.setSize(600,900);
+		frame.setSize(600,700);
 		frame.setVisible(true);
 	}
 	
@@ -108,18 +108,18 @@ public class starter extends JPanel implements Runnable, MouseListener {
 		}
 	}
 		
-		public Color getRandomColor()
-		{
-			int r = (int)(Math.random()*255);
-			int g = (int)(Math.random()*255);
-			int b = (int)(Math.random()*255);
-			return new Color(r,g,b);
-		}
+	public Color getRandomColor()
+	{
+		int r = (int)(Math.random()*255);
+		int g = (int)(Math.random()*255);
+		int b = (int)(Math.random()*255);
+		return new Color(r,g,b);
+	}
 		
-		public int getRandomSpeed()
-		{
-			return (int)(Math.random()*5)+1;
-		}
+	public int getRandomSpeed()
+	{
+		return (int)(Math.random()*5)+1;
+	}
 		
 		public void mousePressed(MouseEvent e){}
 		public void mouseReleased(MouseEvent e){}

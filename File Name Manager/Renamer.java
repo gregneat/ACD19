@@ -119,7 +119,7 @@ public class Renamer
 				switch(id){
 					case "sfo":
 						if(isBetween(num, start, end))
-							num--;
+							num++;
 						myfile.renameTo(new File(file.getPath() + "\\" + num + ACD[i].getName().substring(ACD[i].getName().indexOf(" "))));
 						break;
 					case "b10":

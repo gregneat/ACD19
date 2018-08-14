@@ -55,17 +55,18 @@ public class starter extends JPanel implements Runnable{
 			for(int j =0; j< traffic.length; j++)
 			{
 				traffic[j].drive();
-				repaint();
 					
-				try { Thread.sleep(15); }
-				catch (InterruptedException e) { }
-				
 				if(traffic[j].getX() > 570)
 				{
-					traffic[j].setLocation(-570,0);
-					repaint();
+					traffic[j].setLocation(-200,traffic[j].getY());
 				}
 			}
+			
+			repaint();
+				
+			try { Thread.sleep(15); }
+			catch (InterruptedException e) { }
+				
 		}	
 	}
 }

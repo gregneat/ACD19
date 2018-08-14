@@ -40,6 +40,9 @@ public class TestContain extends JPanel implements MouseListener,MouseMotionList
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(color);
 		g2.fill(rect);
+		
+		g.setColor(Color.BLACK);
+		g.drawString("Drag the rectangle",100,200);
 	}
   
 	//must use all the methods of the MouseListener and MouseMotionListener interfaces

@@ -12,7 +12,7 @@ public class starter extends JPanel implements MouseListener,Runnable {
 		frame = new JFrame("App");
 		frame.add(new starter());
 		frame.setUndecorated(true);
-		frame.setSize(600,900);
+		frame.setSize(600,700);
 		frame.setVisible(true);
 	}
 	
@@ -78,7 +78,7 @@ public class starter extends JPanel implements MouseListener,Runnable {
 		}
 		
 		g.setColor(Color.BLACK);
-		g.drawString("Click a vehicle to stop it",200,800);
+		g.drawString("Click a vehicle to stop it",200,650);
 	}
 
 	public void mousePressed(MouseEvent e)
