@@ -11,7 +11,7 @@ public class RenameTester
         // creating new folder
         File myfolder = new File(folder_path);
 		//Renamer.shiftFileOrder(myfolder,48,69);
-		//Renamer.renameFilesInBinary(myfolder);
+		Renamer.renameFilesInBinary(myfolder);
 		//Renamer.renameFilesInBase10(myfolder);
 		System.out.println("Files have been changed");
     }
