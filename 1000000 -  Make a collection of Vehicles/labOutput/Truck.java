@@ -4,18 +4,20 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 
-public class Truck
+public class Truck implements Vehicle
 {
 	public static int TRUCKHEIGHT = 120;
 	public static int TRUCKWIDTH = 120;
-	private int sp;
+	private double sp;
     private double xCoord, yCoord, width, height;
 	private Rectangle2D.Double body, cab;
 	private Ellipse2D.Double wh1, wh2, wh3, wh4;
 	private String label, locLabel;
 	private Color bodyColor;
 
-    public Truck(double xx, double yy)
+	int xx = 0;
+	int yy = 100;
+    public Truck()
     {
 		body = new Rectangle2D.Double(xx,yy, 200,90);
 		cab = new Rectangle2D.Double(xx+205,yy+40,50,50);
@@ -30,17 +32,24 @@ public class Truck
 		label= "";
 		sp = 5;
     }
+	
+	public Truck(String n)
+	{
+		this();
+		label = n;
+	}
+	
 	public Truck(double x, double y, String n)
     {
-		this(x,y);
-		label = n;
+		this(n);
+		setLocation(x,y);
     }
 	public Truck(double x, double y, String n, Color c)
     {
 		this(x,y,n);
 		bodyColor = c;
     }
-	public Truck(double x, double y, String n, Color c, int s)
+	public Truck(double x, double y, String n, Color c, double s)
     {
 		this(x,y,n,c);
 		sp = s;
@@ -57,17 +66,6 @@ public class Truck
 		locLabel = getX()+getSpeed()+", "+getY();
 	}
 	
-	public void setLocation(double xx, double yy)
-	{
-		body.setFrame(xx,yy,200,90);
-		cab.setFrame(xx+205,yy+40,50,50);
-		wh1.setFrame(xx+205+10,yy+40+50-10,30,30);
-		wh2.setFrame(xx+150,yy+40+50-10,30,30);
-		wh3.setFrame(xx+10,yy+40+50-10,30,30);
-		wh4.setFrame(xx+45,yy+40+50-10,30,30);
-		locLabel = xx+", "+yy;
-	}
-	
 	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
@@ -81,6 +79,17 @@ public class Truck
 		g.drawString(label,(int)getX()+35,(int)getY()+25);
 	}
 	
+	public void setLocation(double xx, double yy)
+	{
+		body.setFrame(xx,yy,200,90);
+		cab.setFrame(xx+205,yy+40,50,50);
+		wh1.setFrame(xx+205+10,yy+40+50-10,30,30);
+		wh2.setFrame(xx+150,yy+40+50-10,30,30);
+		wh3.setFrame(xx+10,yy+40+50-10,30,30);
+		wh4.setFrame(xx+45,yy+40+50-10,30,30);
+		locLabel = xx+", "+yy;
+	}
+	
 	public double getX()
 	{
 		return body.getX();
@@ -90,7 +99,8 @@ public class Truck
 	{
 		return body.getY();
 	}
-	public int getSpeed()
+	
+	public double getSpeed()
 	{
 		return sp;
 	}
@@ -115,7 +125,7 @@ public class Truck
 		wh2.contains(x,y)||wh3.contains(x,y)||wh4.contains(x,y);
 	}
 	
-	public void changeSpeed(int ns)
+	public void changeSpeed(double ns)
 	{
 		sp=ns;
 	}

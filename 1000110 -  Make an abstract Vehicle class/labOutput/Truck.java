@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 
-public class Truck implements Vehicle
+public class Truck extends AbstractVehicle
 {
 	public static int TRUCKHEIGHT = 120;
 	public static int TRUCKWIDTH = 120;
@@ -15,8 +15,9 @@ public class Truck implements Vehicle
 	private String label, locLabel;
 	private Color bodyColor;
 
-    public Truck(double xx, double yy)
+	public Truck(double xx, double yy)
     {
+		super(xx,yy);
 		body = new Rectangle2D.Double(xx,yy, 200,90);
 		cab = new Rectangle2D.Double(xx+205,yy+40,50,50);
 		wh1 = new Ellipse2D.Double(xx+205+10,yy+40+50-10,30,30);
@@ -28,24 +29,16 @@ public class Truck implements Vehicle
 		bodyColor = Color.RED;
 		locLabel = getX()+", "+getY();
 		label= "";
-		sp = 5;
-    }
-	public Truck(double x, double y, String n)
-    {
-		this(x,y);
-		label = n;
-    }
-	public Truck(double x, double y, String n, Color c)
-    {
-		this(x,y,n);
-		bodyColor = c;
-    }
-	public Truck(double x, double y, String n, Color c, double s)
-    {
-		this(x,y,n,c);
-		sp = s;
+		sp = 3;
     }
 	
+	//**abstract method that must be implemented
+	public void printVehicleType()
+	{
+		System.out.println("This is the truck class.");
+	}
+	
+	//**abstract method that must be implemented
 	public void drive()
 	{
 		body.setFrame(body.getX()+getSpeed(),body.getY(),body.getWidth(),body.getHeight());
@@ -57,6 +50,21 @@ public class Truck implements Vehicle
 		locLabel = getX()+getSpeed()+", "+getY();
 	}
 	
+	//**abstract method that must be implemented
+	public void paint(Graphics g)
+	{
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(bodyColor);
+		g2.fill(body);g2.fill(cab);
+		g2.setColor(Color.BLACK);
+		g2.fill(wh1);g2.fill(wh2);
+		g2.fill(wh3);g2.fill(wh4);
+		g.setColor(Color.BLACK);
+		g.drawString(locLabel,(int)getX()+35,(int)getY()+45);
+		g.drawString(label,(int)getX()+35,(int)getY()+25);
+	}
+	
+	//**abstract method that must be implemented
 	public void setLocation(double xx, double yy)
 	{
 		body.setFrame(xx,yy,200,90);
@@ -68,19 +76,6 @@ public class Truck implements Vehicle
 		locLabel = xx+", "+yy;
 	}
 	
-	public void paint(Graphics g)
-	{
-		Graphics2D g2 = (Graphics2D)g;
-		g2.setColor(bodyColor);
-		g2.fill(body);g2.fill(cab);
-		g2.setColor(Color.BLACK);
-		g2.fill(wh1);g2.fill(wh2);
-		g2.fill(wh3);g2.fill(wh4);
-		g.setColor(Color.WHITE);
-		g.drawString(locLabel,(int)getX()+35,(int)getY()+45);
-		g.drawString(label,(int)getX()+35,(int)getY()+25);
-	}
-	
 	public double getX()
 	{
 		return body.getX();
@@ -90,6 +85,7 @@ public class Truck implements Vehicle
 	{
 		return body.getY();
 	}
+	
 	public double getSpeed()
 	{
 		return sp;

@@ -1,2 +1,0 @@
-java -cp ; GameShow
-pause
