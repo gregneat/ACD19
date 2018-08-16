@@ -9,7 +9,7 @@ public class starter extends JPanel implements Runnable
 	static JFrame frame;
 	
 	//user part
-	String phrase = "Hello Joe";
+	String phrase = "Hello World";
 	String answer="";
 	int cl=0;
 	
@@ -50,6 +50,8 @@ public class starter extends JPanel implements Runnable
 	{
 		super.paintComponent(g);
 		
+		metrics = g.getFontMetrics(g.getFont());
+		
 		g.setColor(Color.BLACK);
 		String name = "JOE";
 		g.drawString(name,(int)rect.getX()+10,(int)rect.getY()+30);
@@ -57,9 +59,6 @@ public class starter extends JPanel implements Runnable
 		String coords = "("+(int)rect.getX()+","+(int)rect.getY()+")";
 		g.drawString(coords,(int)rect.getX(),(int)rect.getY()-10);
 	
-	
-		metrics = g.getFontMetrics(g.getFont());
-		
 		//set first checkpoint for rect to pass
 		if(counter==0)
 		{
@@ -90,6 +89,8 @@ public class starter extends JPanel implements Runnable
 		
 		g.setColor(Color.BLACK);
 		g.drawString("Your answer: "+answer,50,200);
+		
+		g.drawString("Please check the command window after the phrase is revealed.",50,50);
 	}
 	
 	public void run()
@@ -98,14 +99,14 @@ public class starter extends JPanel implements Runnable
 		{
 			xCoord+=1;
 			rect.setFrame(xCoord,100,50,50);
-			repaint();
 			
-				if(xCoord>startPos+2&&xCoord>=startPos+metrics.stringWidth(phrase)+10)
+			if(xCoord>120)
 			{
 				break;
 			}
+			repaint();
 		
-			try { Thread.sleep(50); }
+			try { Thread.sleep(15); }
 			catch (InterruptedException e) { }
 		}
 		System.out.print("Please type the phrase as seen on the screen: ");

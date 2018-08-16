@@ -29,6 +29,10 @@ public class starter extends JPanel implements KeyListener
 		super.paintComponent(g);
 		
 		g.drawString(letters,100,200);
+		
+		g.setFont(new Font("SERIF",Font.PLAIN,20));
+		g.drawString("Type anything on the graphics window",150,50);
+		g.drawString("Then, check the command window",150,100);
 	}
 	
 	public void keyTyped(KeyEvent e)

@@ -1,8 +1,10 @@
+import pkg.*;
+
 public class starter {
 
         public static void main(String args[])
         {
-			System.out.print("Please enter your favorite character: ");
+			System.out.print("Please enter your favorite word: ");
 			EasyReader in;
 			in = new EasyReader();
 			String w = in.readWord();

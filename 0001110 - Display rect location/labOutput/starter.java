@@ -35,6 +35,10 @@ public class starter extends JPanel
 		g2.fill(rect);
 		
 		g.setColor(Color.BLACK);
+		String name = "JOE";
+		g.drawString(name,(int)rect.getX()+10,(int)rect.getY()+30);
+		
+		
 		String coords = "("+(int)rect.getX()+","+(int)rect.getY()+")";
 		g.drawString(coords,(int)rect.getX(),(int)rect.getY()-10);
 	}

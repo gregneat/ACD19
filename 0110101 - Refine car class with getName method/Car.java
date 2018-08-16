@@ -51,7 +51,7 @@ public class Car{
 		g2.setColor(color);
 		g2.fill(body1);
 		g2.fill(body2);
-		g2.setColor(Color.WHITE);
+		g2.setColor(Color.BLACK);
 		g2.fill(wheel1);
 		g2.fill(wheel2);
 		

@@ -22,16 +22,17 @@ public class starter extends JPanel implements Runnable
 		Color a = new Color(0,255,0);
 		setBackground(a);
 		
-		rects = new Rectangle2D.Double[7];
+		rects = new Rectangle2D.Double[100];
+		int y=0;
 		for(int i=0;i<rects.length;i++)
 		{
-			int y = (int)(Math.random()*500);
+			y = (int)(Math.random()*500);
 			
 			//makes sure rects start with rect width gap between them
 			rects[i] = new Rectangle2D.Double(-i*2*50,y,50,50);
 		}
 		
-		names = new String[]{"BOB","SUE","JOE"};
+		names = new String[]{"BOB","SUE","JOE","TIM"};
 		
 		Thread thread = new Thread(this);
 		thread.start();//calls the run function
@@ -45,13 +46,13 @@ public class starter extends JPanel implements Runnable
 		
 		for(int i=0;i<rects.length;i++)
 		{
-			Color[] colors = new Color[] {Color.BLUE, Color.YELLOW, Color.RED};
-			g2.setColor(colors[i%3]);
+			Color[] colors = new Color[] {Color.BLUE,Color.YELLOW,Color.RED,Color.MAGENTA};
+			g2.setColor(colors[i%4]);
 			g2.fill(rects[i]);
 			
 			g.setColor(Color.BLACK);
 			//String name = "JOE";
-			String name = names[i%3];
+			String name = names[i%4];
 			g.drawString(name,(int)rects[i].getX()+10,(int)rects[i].getY()+30);
 		
 			String coords = "("+(int)rects[i].getX()+","+(int)rects[i].getY()+")";
@@ -76,7 +77,7 @@ public class starter extends JPanel implements Runnable
 					y = (int)(Math.random()*500);
 					
 					//makes sure gap between rects stays constant
-					x= -2*rects[i].getWidth();
+					x= -2*100*rects[i].getWidth();
 				}
 				rects[i].setFrame(x,y,rects[i].getWidth(),rects[i].getHeight());
 			}

@@ -61,7 +61,7 @@ public class starter extends JPanel implements Runnable, KeyListener
 	{
 		super.paintComponent(g);
 		
-		g.drawString("Press enter to submit",200,20);
+			g.drawString("Type the phrase and press enter to submit",150,50);
 		
 		g.setColor(Color.BLACK);
 		String name = "JOE";

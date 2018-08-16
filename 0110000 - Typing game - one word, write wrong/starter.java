@@ -34,8 +34,13 @@ public class starter extends JPanel implements Runnable
 	
 	public starter()
 	{
-		infile = new EasyReader("mobydick.txt");
+		infile = new EasyReader("words.txt");
+		printWords(infile);
+	
+		infile = new EasyReader("words.txt");
 		phrase = getRandomWord(infile);
+		
+		
 		in = new EasyReader();
 		
 		Color a = new Color(0,255,0);
@@ -55,9 +60,12 @@ public class starter extends JPanel implements Runnable
 			rect.setFrame(xCoord,100,50,50);
 			repaint();
 			
-			if(xCoord>startPos+2&&xCoord>=startPos+metrics.stringWidth(phrase)+10)
+			if(xCoord>startPos+10)
 			{
-				break;
+				if(xCoord>=startPos+metrics.stringWidth(phrase)+10)
+				{
+					break;
+				}
 			}
 		
 			try { Thread.sleep(50); }
@@ -123,6 +131,19 @@ public class starter extends JPanel implements Runnable
 		g.setColor(Color.BLACK);
 		g.drawString("Your answer: "+answer,50,200);
 		g.drawString("You are: "+endPhrase,50,230);
+		
+		g.drawString("Please check the command window after the phrase is revealed.",50,50);
+	}
+	
+	public void printWords(EasyReader file)
+	{
+		ArrayList<String> words = new ArrayList<String>();
+		while(!file.eof())
+		{
+			String currentWord = file.readWord();
+			if(currentWord != null)
+			   System.out.println(currentWord);
+		}
 	}
 	
 	public static String getRandomWord(EasyReader file)
@@ -138,7 +159,9 @@ public class starter extends JPanel implements Runnable
 		//while loop that checks condition at the end
 		do
 		{
-			randomWord = words.get((int)(Math.random()*words.size()));
+			int rand = (int)(Math.random()*words.size());
+			System.out.println("The word at index "+rand+" was chosen.");
+			randomWord = words.get(rand);
 		}
 		while(!checkPunctaution(randomWord));
 		return randomWord;

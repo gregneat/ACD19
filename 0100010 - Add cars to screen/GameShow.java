@@ -9,7 +9,7 @@ public class GameShow extends JPanel implements Runnable,KeyListener{
 	Car[] arr;
 	Thread runner;
 	int x,count;
-	boolean lose,win;
+	boolean lose,win,start;
 	static JFrame frame;
 	
 	public static void main(String[] args) {
@@ -56,9 +56,9 @@ public class GameShow extends JPanel implements Runnable,KeyListener{
 	{
 		super.paintComponent(g);
 	
-		if(count<1)
+		if(!start)
 		{
-			g.drawString("Use up and down arrow keys to move",500,120);
+			g.drawString("Use W and S keys to move up and down",500,120);
 		}
 	
 		p.paint(g);
@@ -82,13 +82,14 @@ public class GameShow extends JPanel implements Runnable,KeyListener{
 	//moving the car object with keys
 	public void keyPressed(KeyEvent e)
 	{
-		count=1;
-		if(e.getKeyCode() == KeyEvent.VK_UP)
+		if(e.getKeyCode() == KeyEvent.VK_W)
 		{
+			start=true;
 			p.setLocation(p.getX(),p.getY()-10);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+		else if(e.getKeyCode() == KeyEvent.VK_S)
 		{
+			start=true;
 			p.setLocation(p.getX(),p.getY()+10);	
 		}
 		repaint();

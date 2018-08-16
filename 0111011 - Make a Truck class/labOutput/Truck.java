@@ -7,7 +7,7 @@ import java.awt.event.*;
 public class Truck
 {
 	public static int TRUCKHEIGHT = 120;
-	public static int TRUCKWIDTH = 120;
+	public static int TRUCKWIDTH = 255;
 	private double sp;
     private double xCoord, yCoord, width, height;
 	private Rectangle2D.Double body, cab;

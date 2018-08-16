@@ -21,16 +21,16 @@ public class starter extends JPanel implements Runnable
 		Color a = new Color(0,255,0);
 		setBackground(a);
 		
-		String[] names = new String[]{"BOB","SUE","JOE","EDAN","RICKY","NEAT"};
-		Color[] colors = new Color[]{Color.BLUE,Color.RED,Color.YELLOW,Color.PINK,Color.MAGENTA,Color.ORANGE};
+		String[] names = new String[]{"JOE","EDAN","RICKY","NEAT"};
+		Color[] colors = new Color[]{Color.BLUE,Color.RED,Color.YELLOW,Color.MAGENTA};
 		
 		//this amount of cars will not overlap when recycled
-		cars = new Car[6];
+		cars = new Car[4];
 		for(int i=0;i<cars.length;i++)
 		{
 			int y = (int)(Math.random()*500);
-			String name = names[i%6];
-			Color color = colors[i%6];
+			String name = names[i%4];
+			Color color = colors[i%4];
 			
 			//makes sure cars start with car width gap between them
 			cars[i] = new Car(-i*2*CAR_WIDTH,y,name,color,2);

@@ -56,19 +56,20 @@ public class GameShow extends JPanel implements Runnable,MouseListener,KeyListen
 			setScreen();
 			repaint();
 			
+			if(p.getY()<=-40||p.getY()>=600)
+			{
+				lose=true;
+				repaint();
+			}
+			
 			//this part pauses the method for 15 milliseconds so it appears the blocks are falling
 			try { Thread.sleep(15); }
 			catch (InterruptedException e) { }
 		}
 		
-		if(p.getY()<=-40||p.getY()>=600)
+		if(!lose)
 		{
-			lose=true;
-			repaint();
-		}
-		else
-		{
-			win=true;
+			win = true;
 			repaint();
 		}
 	}
@@ -81,7 +82,7 @@ public class GameShow extends JPanel implements Runnable,MouseListener,KeyListen
 		if(count<2)
 		{
 			g.drawString("Double click to start",500,100);
-			g.drawString("Use up and down arrow keys to move",500,120);
+			g.drawString("Use W and S keys to move",500,120);
 		}
 	
 		p.paint(g);
@@ -124,11 +125,11 @@ public class GameShow extends JPanel implements Runnable,MouseListener,KeyListen
 	//moving the car object with keys
 	public void keyPressed(KeyEvent e)
 	{
-		if(e.getKeyCode() == KeyEvent.VK_UP)
+		if(e.getKeyCode() == KeyEvent.VK_W)
 		{
 			p.setLocation(p.getX(),p.getY()-10);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+		else if(e.getKeyCode() == KeyEvent.VK_S)
 		{
 			p.setLocation(p.getX(),p.getY()+10);	
 		}

@@ -36,32 +36,20 @@ public class starter extends JPanel implements KeyListener
 		g2.setColor(Color.BLUE);
 		g2.fill(rect);
 		g.setColor(Color.BLACK);
-		g.drawString("Use WASD to move rectangle",200,300);
-		
-		g.drawString("You pressed: "+key, 250,50);
+		g.drawString("Use A and D to move rectangle",200,300);
 	}
 	
 	public void keyPressed(KeyEvent e)
 	{
-		if(e.getKeyCode() == KeyEvent.VK_W)
-		{
-			yCoord = yCoord-10;
-		}
 		if(e.getKeyCode() == KeyEvent.VK_A)
 		{
 			xCoord = xCoord-10;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_S)
-		{
-			yCoord = yCoord+10;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_D)
 		{
 			xCoord = xCoord+10;
 		}
 		
-		char a = e.getKeyChar();
-		key = Character.toString(a);
 
 		rect.setFrame(xCoord,yCoord,rect.getWidth(),rect.getHeight());
 		repaint();
