@@ -1,12 +1,15 @@
 //HIDE
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.*;
+import java.awt.geom.*;
 
 public interface Vehicle
 {
-	public void translate(double ex, double why);
+	public void drive();
+	public void setLocation(double x, double y);
 	public boolean contains(double x, double y);
-	public int getX();
-	public void changeSpeed(int ns);
-	public int getSpeed();
+	public void paint(Graphics g);
+	public void changeSpeed(double ns);
+	public double getSpeed();
+	public double getX();
+	public double getY();
 }

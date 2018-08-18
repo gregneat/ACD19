@@ -1,54 +1,48 @@
-// note this solution does not utilize inheritance.
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.event.*;
 
-public class starter implements InputControl {
+public class starter extends JPanel
+{
+	static JFrame frame;
 	
-	public static void main(String args[])
-        {
-			// following line is necessary for onMouseClick, don't change
-			MouseController mC = new MouseController(Canvas.getInstance(),new starter());
-			// int r = (int)(Math.random()*255);
-			// int g = (int)(Math.random()*255);
-			// int b = (int)(Math.random()*255);
-			// Color temp = new Color(r,g,b);
-			// Truck joe = new Truck(30,30,"neato",temp,23);
-			// put your code here:
-			int boatLen = 80;
-			Rectangle boat = new Rectangle(98-boatLen,30,boatLen,20);
-			boat.fill();
-			int yStart = 0;
-			int r = (int)(Math.random()*255);
-			int g = (int)(Math.random()*255);
-			int b = (int)(Math.random()*255);
-			Color temp = new Color(r,g,b);
-			String s = "car ";
-			int sp = (int)(Math.random()*5)+1;
-			int xStart = 100;
-			Car wBoat = new Car(xStart,yStart, s,temp,sp);
-	
-			while(true)
-			{
-				wBoat.translate(wBoat.getSpeed(),0);
-				boat.translate(wBoat.getSpeed(),0);
-				if(wBoat.getX() > 570)
-				{
-					wBoat.translate(-570,yStart);
-					boat.translate(-570,yStart);
-				}
-				Canvas.pause(10000);
-			}	
-		}
+	Car redCar;
+	Rectangle2D.Double latch;
+	Ellipse2D.Double wheel;
+	Polygon base, window;
 
-		public void onMouseClick(double x, double y)
-		{
-			// // System.out.println("x is: " + x + "y is: " + y);
-			// for(int i = 0; i<traffic.length;i++)
-			// {
-				// if(traffic[i].contains(x,y))
-				// {				
-					// traffic[i].changeSpeed(0);
-					// System.out.print(traffic[i].getName() + " " +traffic[i].getSpeed());
-				// }
-				// System.out.println();
-			// }
-		}
+	public static void main(String[] args) {
+		frame = new JFrame("App");
+		frame.add(new starter());
+		frame.setUndecorated(true);
+		frame.setSize(600,600);
+		frame.setVisible(true);
+	}
+	
+	public starter()
+	{
+		Color a = new Color(0,255,0);
+		setBackground(a);
+		redCar = new Car(300,200,"FERRARI",Color.RED,0.5);
+		latch = new Rectangle2D.Double(220,207.5,120,5);
+		base = new Polygon(new int[]{180,200,240,260}, new int[]{200,220,220,200},4);
+		window = new Polygon(new int[]{200,230,240}, new int[]{200,180,200}, 3);
+		wheel = new Ellipse2D.Double(212.5,220,15,15);
+	}
+	
+	public void paintComponent(Graphics g)
+	{
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(Color.BLACK);
+		g2.fill(latch);
+		g2.fill(wheel);
+		g2.setColor(new Color(0,0,200));
+		g2.fill(base);
+		g2.setColor(Color.WHITE);
+		g2.fill(window);
+		redCar.paint(g);
+	}
 }
+

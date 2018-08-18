@@ -1,75 +1,89 @@
-public class starter implements InputControl {
-	
-	private static Vehicle[] traffic;
-	
-	public static void main(String args[])
-        {
-			// following line is necessary for onMouseClick, don't change
-			MouseController mC = new MouseController(Canvas.getInstance(),new starter());
-			// int r = (int)(Math.random()*255);
-			// int g = (int)(Math.random()*255);
-			// int b = (int)(Math.random()*255);
-			// Color temp = new Color(r,g,b);
-			// Truck joe = new Truck(30,30,"neato",temp,23);
-			// put your code here:
-			
-			traffic = new Vehicle[5];
-			int yStart = 0;
-			for(int i=0; i<traffic.length;i++)
-			{
-				int r = (int)(Math.random()*255);
-				int g = (int)(Math.random()*255);
-				int b = (int)(Math.random()*255);
-				Color temp = new Color(r,g,b);
-				String s = "car ";
-				// make all cars go speed 1 to check average calc
-				int sp = (int)(Math.random()*5)+1;
-				int xStart = 100;
-				while(yStart%Truck.CARHEIGHT != 0)
-				{
-					yStart++;
-				}
-				int flip = (int)(Math.random()*3);
-				if(flip == 0)
-				{
-					traffic[i] = new Truck(xStart,yStart, s+i,temp,sp);
-				}
-				else if(flip == 1)
-				{
-					traffic[i] = new Car(xStart,yStart, s+i,temp,sp);
-				}
-				else
-				{
-					traffic[i] = new CarWBoat(xStart,yStart, "car w boat",temp,sp);
-				}
-				
-				yStart++;
-			}
-			while(true)
-			{
-				for(int j =0; j< traffic.length; j++)
-				{
-					traffic[j].translate(traffic[j].getSpeed(),0);
-					if(traffic[j].getX() > 570)
-					{
-						traffic[j].translate(-570,0);
-					}
-				}
-				Canvas.pause(10000);
-			}	
-		}
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.event.*;
 
-		public void onMouseClick(double x, double y)
+public class starter extends JPanel implements Runnable, MouseListener
+{
+	static JFrame frame;
+	
+	Vehicle[] vehicles;
+
+	public static void main(String[] args) {
+		frame = new JFrame("App");
+		frame.add(new starter());
+		frame.setUndecorated(true);
+		frame.setSize(600,900);
+		frame.setVisible(true);
+		
+	}
+	
+	public starter()
+	{
+		Color a = new Color(0,255,0);
+		setBackground(a);
+		vehicles = new Vehicle[4];
+		for(int i=0; i<vehicles.length; i++)
 		{
-			// System.out.println("x is: " + x + "y is: " + y);
-			for(int i = 0; i<traffic.length;i++)
+			Color rand = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+			switch(i)
 			{
-				if(traffic[i].contains(x,y))
-				{				
-					traffic[i].changeSpeed(0);
-					// System.out.print(traffic[i].getName() + " " +traffic[i].getSpeed());
-				}
-				// System.out.println();
+				case 0:
+					vehicles[i] = new Car(0, 20+200*i, "Car", rand, 2);
+					break;
+				case 1:
+				case 3:
+					vehicles[i] = new CarWithBoat(100, 20+200*i, "Car with Boat", rand, 2);
+					break;
+					case 2:
+					vehicles[i] = new Truck(0, 200*i-20, "Truck", rand, 2);
+					break;
 			}
 		}
+		frame.addMouseListener(this);
+		
+		System.out.println("Click vehicles to start and stop them");
+		Thread thread = new Thread(this);
+		thread.start();//calls the run function
+	}
+	
+	public void paintComponent(Graphics g)
+	{
+		super.paintComponent(g);
+		for(Vehicle item: vehicles)
+			item.paint(g);
+	}
+	public void run()
+	{
+		while(true)
+		{
+			for(int i=0; i<vehicles.length; i++)
+			{
+				vehicles[i].drive();
+				if(vehicles[i].getX() >= 600)
+					vehicles[i].setLocation(0,vehicles[i].getY());
+			}
+			repaint();
+			try { Thread.sleep(15); }
+			catch (InterruptedException e) { }
+		}
+	}
+	public void mousePressed(MouseEvent e)
+	{
+		for(int i = 0; i<vehicles.length;i++)
+		{	
+			if(vehicles[i].contains(e.getX(),e.getY()))
+			{
+				if(vehicles[i].getSpeed() == 0)
+					vehicles[i].changeSpeed(2);
+				else
+					vehicles[i].changeSpeed(0);
+			}
+		}
+	} 
+	public void mouseClicked(MouseEvent e){}
+	public void mouseReleased(MouseEvent e){}  
+	public void mouseEntered(MouseEvent e){} 
+	public void mouseExited(MouseEvent e){}
 }
+

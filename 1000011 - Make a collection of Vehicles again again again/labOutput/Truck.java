@@ -1,112 +1,131 @@
 //HIDE
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.event.*;
 
 public class Truck implements Vehicle
 {
-	public static final int CARHEIGHT = 150;
-    private Color color = Color.BLACK;
-	private int sp;
-    private boolean filled = false;
-    private double x;
-    private double y;
-    private double width;
-    private int height;
-	private Rectangle body;
-	private Rectangle cab;
-	private Ellipse wh1;
-	private Ellipse wh2;
-	private Ellipse wh3;
-	private Ellipse wh4;
-	private Text label;
-	private Text locLabel;
-	private String s;
+	public static int TRUCKHEIGHT = 120;
+	public static int TRUCKWIDTH = 255;
+	private double sp;
+    private double xCoord, yCoord, width, height;
+	private Rectangle2D.Double body, cab;
+	private Ellipse2D.Double wh1, wh2, wh3, wh4;
+	private String label, locLabel;
+	private Color bodyColor;
 
-    public Truck(double x, double y)
+	int xx = 0;
+	int yy = 100;
+    public Truck()
     {
-		height = 150;
-		body = new Rectangle(x,y, 200,90);
-		body.fill();
-		cab = new Rectangle(x+205,y+40,50,50);
-		cab.fill();
-		wh1 = new Ellipse(x+205+10,y+40+50-10,30,30);
-		wh1.fill();
-		wh2 = new Ellipse(x+150,y+40+50-10,30,30);
-		wh2.fill();
-		wh3 = new Ellipse(x+10,y+40+50-10,30,30);
-		wh3.fill();
-		wh4 = new Ellipse(x+45,y+40+50-10,30,30);
-		wh4.fill();
-        this.x = x;
-        this.y = y;
+		body = new Rectangle2D.Double(xx,yy, 200,90);
+		cab = new Rectangle2D.Double(xx+205,yy+40,50,50);
+		wh1 = new Ellipse2D.Double(xx+205+10,yy+40+50-10,30,30);
+		wh2 = new Ellipse2D.Double(xx+150,yy+40+50-10,30,30);
+		wh3 = new Ellipse2D.Double(xx+10,yy+40+50-10,30,30);
+		wh4 = new Ellipse2D.Double(xx+45,yy+40+50-10,30,30);
+        xCoord = xx;
+        yCoord = yy;
+		bodyColor = Color.RED;
+		locLabel = getX()+", "+getY();
+		label= "";
 		sp = 5;
-		s = "";
     }
+	
+	public Truck(String n)
+	{
+		this();
+		label = n;
+	}
+	
 	public Truck(double x, double y, String n)
     {
-		this(x,y);
-		label = new Text(x+35,y+25,n);
-		label.setColor(Color.WHITE);
-		label.draw();
-		locLabel = new Text(x+35,y+45,getX()+", "+getY());
-		locLabel.setColor(Color.WHITE);
-		locLabel.draw();
-		s=n;
+		this(n);
+		setLocation(x,y);
     }
 	public Truck(double x, double y, String n, Color c)
     {
 		this(x,y,n);
-		body.setColor(c);
-		cab.setColor(c);
-		body.fill();
+		bodyColor = c;
     }
-	public Truck(double x, double y, String n, Color c, int s)
+	public Truck(double x, double y, String n, Color c, double s)
     {
 		this(x,y,n,c);
 		sp = s;
     }
-	public void translate(double ex, double why)
+	
+	public void drive()
 	{
-		body.translate(ex,why);
-		cab.translate(ex,why);
-		wh1.translate(ex,why);
-		wh2.translate(ex,why);
-		wh3.translate(ex,why);
-		wh4.translate(ex,why);
-		label.translate(ex,why);
-		locLabel.setText(getX()+", "+getY());
-		locLabel.translate(ex,why);
+		body.setFrame(body.getX()+getSpeed(),body.getY(),body.getWidth(),body.getHeight());
+		cab.setFrame(cab.getX()+getSpeed(),cab.getY(),cab.getWidth(),cab.getHeight());
+		wh1.setFrame(wh1.getX()+getSpeed(),wh1.getY(),wh1.getWidth(),wh1.getHeight());
+		wh2.setFrame(wh2.getX()+getSpeed(),wh2.getY(),wh2.getWidth(),wh2.getHeight());
+		wh3.setFrame(wh3.getX()+getSpeed(),wh3.getY(),wh3.getWidth(),wh3.getHeight());
+		wh4.setFrame(wh4.getX()+getSpeed(),wh4.getY(),wh4.getWidth(),wh4.getHeight());
+		locLabel = getX()+getSpeed()+", "+getY();
 	}
 	
-	public int getX()
+	public void paint(Graphics g)
+	{
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(bodyColor);
+		g2.fill(body);g2.fill(cab);
+		g2.setColor(Color.BLACK);
+		g2.fill(wh1);g2.fill(wh2);
+		g2.fill(wh3);g2.fill(wh4);
+		g.setColor(Color.WHITE);
+		g.drawString(locLabel,(int)getX()+35,(int)getY()+45);
+		g.drawString(label,(int)getX()+35,(int)getY()+25);
+	}
+	
+	public void setLocation(double xx, double yy)
+	{
+		body.setFrame(xx,yy,200,90);
+		cab.setFrame(xx+205,yy+40,50,50);
+		wh1.setFrame(xx+205+10,yy+40+50-10,30,30);
+		wh2.setFrame(xx+150,yy+40+50-10,30,30);
+		wh3.setFrame(xx+10,yy+40+50-10,30,30);
+		wh4.setFrame(xx+45,yy+40+50-10,30,30);
+		locLabel = xx+", "+yy;
+	}
+	
+	public double getX()
 	{
 		return body.getX();
 	}
 	
-	public int getY()
+	public double getY()
 	{
 		return body.getY();
 	}
-	public int getSpeed()
+	
+	public double getSpeed()
 	{
 		return sp;
 	}
-	public int getHeight()
+	public double getHeight()
     {
-        return CARHEIGHT;
+        return TRUCKHEIGHT;
+    }
+	public double getWidth()
+    {
+        return TRUCKWIDTH;
     }
 
 	public String getName()
 	{
-		return s;
+		return label;
 	}
 	// should improve this to include wheels or bounding box
 	
 	public boolean contains(double x, double y)
 	{
-		return body.contains(x,y);
+		return body.contains(x,y)||cab.contains(x,y)||wh1.contains(x,y)||
+		wh2.contains(x,y)||wh3.contains(x,y)||wh4.contains(x,y);
 	}
-	public void changeSpeed(int ns)
+	
+	public void changeSpeed(double ns)
 	{
 		sp=ns;
 	}

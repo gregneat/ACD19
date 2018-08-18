@@ -1,89 +1,98 @@
-// note this solution does use arraylists
-// how do you make the Canvas clear of the removed Vehicle Object?
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.event.*;
+import java.util.ArrayList;
 
-import java.util.*;
+public class starter extends JPanel implements Runnable, MouseListener
+{
+	static JFrame frame;
+	
+	ArrayList<Vehicle> vehicles;
 
-public class starter implements InputControl {
+	public static void main(String[] args) {
+		frame = new JFrame("App");
+		frame.add(new starter());
+		frame.setUndecorated(true);
+		frame.setSize(600,900);
+		frame.setVisible(true);
+		
+	}
 	
-	private static ArrayList<Vehicle> traffic;
-	
-	public static void main(String args[])
-        {
-			traffic = new ArrayList<Vehicle>();
-			
-			// following line is necessary for onMouseClick, don't change
-			MouseController mC = new MouseController(Canvas.getInstance(),new starter());
-			// int r = (int)(Math.random()*255);
-			// int g = (int)(Math.random()*255);
-			// int b = (int)(Math.random()*255);
-			// Color temp = new Color(r,g,b);
-			// Truck joe = new Truck(30,30,"neato",temp,23);
-			// put your code here:
-			
-			int yStart = 0;
-			for(int i=0; i<5;i++)
+	public starter()
+	{
+		Color a = new Color(0,255,0);
+		setBackground(a);
+		vehicles = new ArrayList<Vehicle>();
+		for(int i=0; i<4; i++)
+		{
+			Color rand = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+			switch(i)
 			{
-				int r = (int)(Math.random()*255);
-				int g = (int)(Math.random()*255);
-				int b = (int)(Math.random()*255);
-				Color temp = new Color(r,g,b);
-				String s = "car ";
-				// make all cars go speed 1 to check average calc
-				int sp = (int)(Math.random()*5)+1;
-				int xStart = 100;
-				while(yStart%Truck.CARHEIGHT != 0)
+				case 0:
+					vehicles.add(new Car(0, 20+200*i, "Car", rand, 2));
+					break;
+				case 1:
+				case 3:
+					vehicles.add(new CarWithBoat(100, 20+200*i, "Car with Boat", rand, 2));
+					break;
+					case 2:
+					vehicles.add(new Truck(0, 200*i-20, "Truck", rand, 2));
+					break;
+			}
+		}
+		frame.addMouseListener(this);
+		
+		System.out.println("Click vehicles to stop then destroy (remove from arraylist)\n\nTraffic size: "+vehicles.size());
+		Thread thread = new Thread(this);
+		thread.start();//calls the run function
+	}
+	
+	public void paintComponent(Graphics g)
+	{
+		super.paintComponent(g);
+		for(Vehicle item: vehicles)
+			item.paint(g);
+		
+		g.setColor(Color.BLACK);
+		g.drawString("Click on a vehicle to make it stop",100,300);
+		g.drawString("Click on it again to remove it from memory",100,330);
+	}
+	public void run()
+	{
+		while(true)
+		{
+			for(int i=0; i<vehicles.size(); i++)
+			{
+				vehicles.get(i).drive();
+				if(vehicles.get(i).getX() >= 600)
+					vehicles.get(i).setLocation(0,vehicles.get(i).getY());
+			}
+			repaint();
+			try { Thread.sleep(15); }
+			catch (InterruptedException e) { }
+		}
+	}
+	public void mousePressed(MouseEvent e)
+	{
+		for(int i = 0; i<vehicles.size();i++)
+		{	
+			if(vehicles.get(i).contains(e.getX(),e.getY()))
+			{
+				if(vehicles.get(i).getSpeed() == 0)
 				{
-					yStart++;
-				}
-				int flip = (int)(Math.random()*3);
-				if(flip == 0)
-				{
-					traffic.add(new Truck(xStart,yStart, s+i,temp,sp));
-				}
-				else if(flip == 1)
-				{
-					traffic.add(new Car(xStart,yStart, s+i,temp,sp));
+					vehicles.remove(i);
+					System.out.println("New traffic size: "+vehicles.size());
+					break;
 				}
 				else
-				{
-					traffic.add(new CarWBoat(xStart,yStart, "car w boat",temp,sp));
-				}
-				
-				yStart++;
+					vehicles.get(i).changeSpeed(0);
 			}
-			while(true)
-			{
-				// for(int j =0; j< traffic.length; j++)V
-				// {
-					// traffic[j].translate(traffic[j].getSpeed(),0);
-					// if(traffic[j].getX() > 570)
-					// {
-						// traffic[j].translate(-570,0);
-					// }
-				// }
-				for(Vehicle v:traffic)
-				{
-					v.translate(v.getSpeed(),0);
-					if(v.getX() > 570)
-					{
-						v.translate(-570,0);
-					}
-				}
-				Canvas.pause(10000);
-			}	
 		}
-
-		public void onMouseClick(double x, double y)
-		{
-			
-			for(int i = 0; i<traffic.size();i++)
-			{
-				if(traffic.get(i).contains(x,y))
-				{				
-					traffic.remove(i);
-				}
-				System.out.println(traffic.size());
-			}
-			
-		}
+	} 
+	public void mouseClicked(MouseEvent e){}
+	public void mouseReleased(MouseEvent e){}  
+	public void mouseEntered(MouseEvent e){} 
+	public void mouseExited(MouseEvent e){}
 }
+
